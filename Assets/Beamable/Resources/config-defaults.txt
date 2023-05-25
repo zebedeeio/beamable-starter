@@ -1,0 +1,8 @@
+{
+    "cid": "1609481425944580",
+    "alias": "brenthand",
+    "pid": "DE_1620739132908558",
+    "platform": "https://api.beamable.com",
+    "socket": "https://api.beamable.com",
+    "containerPrefix": ""
+}
