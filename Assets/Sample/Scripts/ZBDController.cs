@@ -1,71 +1,123 @@
 using System;
 using System.Threading.Tasks;
 using Beamable;
-using Beamable.Server;
 using Beamable.Server.Clients;
 using Newtonsoft.Json;
-using PubNubMessaging.Core;
 using UnityEngine;
 using ZebedeeAPI;
-using ZebedeeAPI.Wallet;
 
-public class ZBDController : MonoBehaviour
+public static class ZBDController
 {
-    public static ZBDController Instance => _instance;
-
-    private static ZBDController _instance;
-
-    private void Awake()
+    #region Wallet
+    
+    public static async Task<GetWalletDetails_Response> GetWalletBalance()
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        } else {
-            _instance = this;
-        }
-    }
-
-    public static async Task<string> GetWalletBalance()
-    {
+        Debug.Log("GetWalletBalance()");
         var ctx = BeamContext.Default;
         await ctx.OnReady;
-
+    
         var result = await ctx.Microservices().ZBDMicroservice().GetWallet();
-
         var jsonObject = JsonConvert.DeserializeObject<GetWalletDetails_Response>(result);
-
-        return jsonObject.data.balance;
+    
+        return jsonObject;
     }
     
-    public static async Task<string> SendPaymentToGamertag(string gamertag, string sats)
+    #endregion
+    
+    #region Gamertag
+    public static async Task<SendPaymentToGamertag_Response> SendPaymentToGamertag(string gamertag, string amount, string description)
     {
         var ctx = BeamContext.Default;
         await ctx.OnReady;
     
-        var result = await ctx.Microservices().ZBDMicroservice().SendPaymentToGamertag(gamertag, sats);
+        var result = await ctx.Microservices().ZBDMicroservice().SendPaymentToGamertag(gamertag, amount, description);
+        
+        Debug.Log(result);
         
         var jsonObject = JsonConvert.DeserializeObject<SendPaymentToGamertag_Response>(result);
     
-        return result;
+        return jsonObject;
+    }
+
+    public static async Task<FetchGamertagByUserID_Response> GetGamertagByUserID(string userID)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().FetchGamertagByUserID(userID);
+        
+        var jsonObject = JsonConvert.DeserializeObject<FetchGamertagByUserID_Response>(result);
+
+        return jsonObject;
     }
     
-    public static async Task<string> CreateCharge(string expiresIn, string amount, string description)
+    public static async Task<FetchUserIDByGamertag_Response> GetUserIDByGamertag(string gamertag)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().FetchUserIDByGamertag(gamertag);
+        
+        var jsonObject = JsonConvert.DeserializeObject<FetchUserIDByGamertag_Response>(result);
+
+        return jsonObject;
+    }
+    
+    #endregion
+    
+    #region Charges
+    
+    public static  async Task<CreateCharge_Response> CreateCharge(string expiresIn, string amount, string description)
     {
         var ctx = BeamContext.Default;
         await ctx.OnReady;
     
         var result = await ctx.Microservices().ZBDMicroservice().CreateCharge(expiresIn, amount, description);
+        
+        var jsonObject = JsonConvert.DeserializeObject<CreateCharge_Response>(result);
     
-        return result;
+        return jsonObject;
     }
-
-    public static async Task<string> CreateWithdrawal(string amount, string description)
+    
+    public static async Task<GetChargeDetails_Response> GetChargeDetails(string chargeID)
     {
         var ctx = BeamContext.Default;
         await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().GetChargeDetails(chargeID);
+        
+        var jsonObject = JsonConvert.DeserializeObject<GetChargeDetails_Response>(result);
     
-        var result = await ctx.Microservices().ZBDMicroservice().CreateWithdrawal(amount, description);
-    
-        return result;
+        return jsonObject;
     }
+    
+    #endregion
+    
+    #region Withdrawals
+
+    public static  async Task<CreateWithdrawalRequest_Response> CreateWithdrawal(string expiresIn, string amount)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().CreateWithdrawalRequest(expiresIn, amount);
+        
+        var jsonObject = JsonConvert.DeserializeObject<CreateWithdrawalRequest_Response>(result);
+    
+        return jsonObject;
+    }
+    
+    public static async Task<GetWithdrawalRequestDetails_Response> GetWithdrawalRequestDetails(string withdrawalID)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().GetWithdrawalRequestDetails(withdrawalID);
+        
+        var jsonObject = JsonConvert.DeserializeObject<GetWithdrawalRequestDetails_Response>(result);
+    
+        return jsonObject;
+    }
+    
+    #endregion
 }

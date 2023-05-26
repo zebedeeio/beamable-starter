@@ -45,14 +45,40 @@ namespace Beamable.Server.Clients
         /// Call the SendPaymentToGamertag method on the ZBDMicroservice microservice
         /// <see cref="Beamable.Microservices.ZBDMicroservice.SendPaymentToGamertag"/>
         /// </summary>
-        public Beamable.Common.Promise<string> SendPaymentToGamertag(string gamertag, string sats)
+        public Beamable.Common.Promise<string> SendPaymentToGamertag(string gamertag, string amount, string description)
         {
             string serialized_gamertag = this.SerializeArgument<string>(gamertag);
-            string serialized_sats = this.SerializeArgument<string>(sats);
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string serialized_description = this.SerializeArgument<string>(description);
             string[] serializedFields = new string[] {
                     serialized_gamertag,
-                    serialized_sats};
+                    serialized_amount,
+                    serialized_description};
             return this.Request<string>("ZBDMicroservice", "SendPaymentToGamertag", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the FetchGamertagByUserID method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.FetchGamertagByUserID"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> FetchGamertagByUserID(string userID)
+        {
+            string serialized_userID = this.SerializeArgument<string>(userID);
+            string[] serializedFields = new string[] {
+                    serialized_userID};
+            return this.Request<string>("ZBDMicroservice", "FetchGamertagByUserID", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the FetchUserIDByGamertag method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.FetchUserIDByGamertag"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> FetchUserIDByGamertag(string gamertag)
+        {
+            string serialized_gamertag = this.SerializeArgument<string>(gamertag);
+            string[] serializedFields = new string[] {
+                    serialized_gamertag};
+            return this.Request<string>("ZBDMicroservice", "FetchUserIDByGamertag", serializedFields);
         }
         
         /// <summary>
@@ -72,20 +98,6 @@ namespace Beamable.Server.Clients
         }
         
         /// <summary>
-        /// Call the CreateWithdrawal method on the ZBDMicroservice microservice
-        /// <see cref="Beamable.Microservices.ZBDMicroservice.CreateWithdrawal"/>
-        /// </summary>
-        public Beamable.Common.Promise<string> CreateWithdrawal(string amount, string description)
-        {
-            string serialized_amount = this.SerializeArgument<string>(amount);
-            string serialized_description = this.SerializeArgument<string>(description);
-            string[] serializedFields = new string[] {
-                    serialized_amount,
-                    serialized_description};
-            return this.Request<string>("ZBDMicroservice", "CreateWithdrawal", serializedFields);
-        }
-        
-        /// <summary>
         /// Call the GetChargeDetails method on the ZBDMicroservice microservice
         /// <see cref="Beamable.Microservices.ZBDMicroservice.GetChargeDetails"/>
         /// </summary>
@@ -95,6 +107,32 @@ namespace Beamable.Server.Clients
             string[] serializedFields = new string[] {
                     serialized_chargeId};
             return this.Request<string>("ZBDMicroservice", "GetChargeDetails", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the CreateWithdrawalRequest method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.CreateWithdrawalRequest"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> CreateWithdrawalRequest(string expiresIn, string amount)
+        {
+            string serialized_expiresIn = this.SerializeArgument<string>(expiresIn);
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string[] serializedFields = new string[] {
+                    serialized_expiresIn,
+                    serialized_amount};
+            return this.Request<string>("ZBDMicroservice", "CreateWithdrawalRequest", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the GetWithdrawalRequestDetails method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.GetWithdrawalRequestDetails"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetWithdrawalRequestDetails(string withdrawalId)
+        {
+            string serialized_withdrawalId = this.SerializeArgument<string>(withdrawalId);
+            string[] serializedFields = new string[] {
+                    serialized_withdrawalId};
+            return this.Request<string>("ZBDMicroservice", "GetWithdrawalRequestDetails", serializedFields);
         }
     }
     

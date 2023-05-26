@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 609c7ac79fa2b304d9d3ccf740ea427a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Whyte
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f6a9506f29571426688e0cdc0a6a4c98, type: 3}
+  - {fileID: 12800000, guid: e225246171f484984954568f2943056a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
