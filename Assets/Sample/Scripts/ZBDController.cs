@@ -120,4 +120,44 @@ public static class ZBDController
     }
     
     #endregion
+    
+    #region Utilities
+    
+    public static async Task<BTCUSDExchangeRate_Response> GetBTCUSDExchangeRate()
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().GetBTCUSDExchangeRate();
+        
+        var jsonObject = JsonConvert.DeserializeObject<BTCUSDExchangeRate_Response>(result);
+    
+        return jsonObject;
+    }
+    
+    public static async Task<APIProductionIPs_Response> GetProductionIPs()
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().GetProductionIPs();
+        
+        var jsonObject = JsonConvert.DeserializeObject<APIProductionIPs_Response>(result);
+    
+        return jsonObject;
+    }
+    
+    public static async Task<IsSupportedRegion_Response> IsSupportedRegion(string ip)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().SupportedRegion(ip);
+        
+        var jsonObject = JsonConvert.DeserializeObject<IsSupportedRegion_Response>(result);
+    
+        return jsonObject;
+    }
+    
+    #endregion
 }

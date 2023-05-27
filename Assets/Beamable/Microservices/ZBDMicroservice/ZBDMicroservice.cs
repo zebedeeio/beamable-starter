@@ -1,7 +1,5 @@
 using System.Threading.Tasks;
 using Beamable.Server;
-using UnityEngine;
-using ZebedeeAPI;
 
 
 namespace Beamable.Microservices
@@ -110,6 +108,43 @@ namespace Beamable.Microservices
 			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
 			var jsonResponse = await api.GetWithdrawalRequestDetails(withdrawalId);
 		
+			return jsonResponse;
+		}
+		
+		#endregion
+		
+		#region Utilities
+
+		[ClientCallable]
+		public async Task<string> GetBTCUSDExchangeRate()
+		{
+			var apiKey = await GetAPIKey();
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.BTCUSDExchangeRate();
+
+			return jsonResponse;
+		}
+
+		[ClientCallable]
+		public async Task<string> GetProductionIPs()
+		{
+			var apiKey = await GetAPIKey();
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.APIProductionIPs();
+
+			return jsonResponse;
+		}
+		
+		[ClientCallable]
+		public async Task<string> SupportedRegion(string ip)
+		{
+			var apiKey = await GetAPIKey();
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.IsSupportedRegion(ip);
+
 			return jsonResponse;
 		}
 		

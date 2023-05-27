@@ -134,6 +134,38 @@ namespace Beamable.Server.Clients
                     serialized_withdrawalId};
             return this.Request<string>("ZBDMicroservice", "GetWithdrawalRequestDetails", serializedFields);
         }
+        
+        /// <summary>
+        /// Call the GetBTCUSDExchangeRate method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.GetBTCUSDExchangeRate"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetBTCUSDExchangeRate()
+        {
+            string[] serializedFields = new string[0];
+            return this.Request<string>("ZBDMicroservice", "GetBTCUSDExchangeRate", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the GetProductionIPs method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.GetProductionIPs"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetProductionIPs()
+        {
+            string[] serializedFields = new string[0];
+            return this.Request<string>("ZBDMicroservice", "GetProductionIPs", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the SupportedRegion method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.SupportedRegion"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> SupportedRegion(string ip)
+        {
+            string serialized_ip = this.SerializeArgument<string>(ip);
+            string[] serializedFields = new string[] {
+                    serialized_ip};
+            return this.Request<string>("ZBDMicroservice", "SupportedRegion", serializedFields);
+        }
     }
     
     internal sealed class MicroserviceParametersZBDMicroserviceClient

@@ -56,6 +56,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI getWithdrawalDetailsStatusText;
     [SerializeField] private TextMeshProUGUI getWithdrawalDetailsInvoiceText;
     
+    [Header("Utilities")]
+    [SerializeField] private TextMeshProUGUI btcPriceText;
+    [SerializeField] private TextMeshProUGUI btcPriceMessageText;
+
+    [SerializeField] private TextMeshProUGUI productionIPText;
+
+    [SerializeField] private TMP_InputField supportedRegionIPInput;
+    [SerializeField] private TextMeshProUGUI supportedRegionText;
+    
     
     
 
@@ -222,6 +231,43 @@ public class UIController : MonoBehaviour
         getWithdrawalDetailsStatusText.text = result.data.status;
         getWithdrawalDetailsInvoiceText.text = result.data.invoice.request;
         
+    }
+    
+    #endregion
+    
+    #region Utilities
+
+    public async void GetBTCPrice()
+    {
+        btcPriceText.text = "Sending Request...";
+        
+        var result = await ZBDController.GetBTCUSDExchangeRate();
+        
+        btcPriceText.text = result.data.btcUsdPrice;
+        btcPriceMessageText.text = result.message;
+        
+    }
+
+    public async void GetProductionIPs()
+    {
+        productionIPText.text = "Sending Request...";
+        
+        var result = await ZBDController.GetProductionIPs();
+        
+        productionIPText.text = result.data.ips[0];
+        
+    }
+    
+    public async void GetSupportedRegions()
+    {
+        supportedRegionText.text = "Sending Request...";
+        
+        var ip = supportedRegionIPInput.text;
+        
+        var result = await ZBDController.IsSupportedRegion(ip);
+
+        supportedRegionText.text = result.data.isSupported.ToString();
+
     }
     
     #endregion
