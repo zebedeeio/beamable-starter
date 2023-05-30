@@ -113,13 +113,15 @@ namespace Beamable.Server.Clients
         /// Call the CreateWithdrawalRequest method on the ZBDMicroservice microservice
         /// <see cref="Beamable.Microservices.ZBDMicroservice.CreateWithdrawalRequest"/>
         /// </summary>
-        public Beamable.Common.Promise<string> CreateWithdrawalRequest(string expiresIn, string amount)
+        public Beamable.Common.Promise<string> CreateWithdrawalRequest(string expiresIn, string amount, string description)
         {
             string serialized_expiresIn = this.SerializeArgument<string>(expiresIn);
             string serialized_amount = this.SerializeArgument<string>(amount);
+            string serialized_description = this.SerializeArgument<string>(description);
             string[] serializedFields = new string[] {
                     serialized_expiresIn,
-                    serialized_amount};
+                    serialized_amount,
+                    serialized_description};
             return this.Request<string>("ZBDMicroservice", "CreateWithdrawalRequest", serializedFields);
         }
         

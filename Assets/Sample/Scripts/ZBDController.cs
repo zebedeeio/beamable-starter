@@ -95,12 +95,12 @@ public static class ZBDController
     
     #region Withdrawals
 
-    public static  async Task<CreateWithdrawalRequest_Response> CreateWithdrawal(string expiresIn, string amount)
+    public static  async Task<CreateWithdrawalRequest_Response> CreateWithdrawal(string expiresIn, string amount, string description)
     {
         var ctx = BeamContext.Default;
         await ctx.OnReady;
 
-        var result = await ctx.Microservices().ZBDMicroservice().CreateWithdrawalRequest(expiresIn, amount);
+        var result = await ctx.Microservices().ZBDMicroservice().CreateWithdrawalRequest(expiresIn, amount, description);
         
         var jsonObject = JsonConvert.DeserializeObject<CreateWithdrawalRequest_Response>(result);
     

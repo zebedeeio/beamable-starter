@@ -90,12 +90,12 @@ namespace Beamable.Microservices
 		#region Withdrawals
 		
 		[ClientCallable]
-		public async Task<string> CreateWithdrawalRequest(string expiresIn, string amount)
+		public async Task<string> CreateWithdrawalRequest(string expiresIn, string amount, string description)
 		{
 			var apiKey = await GetAPIKey();
 			
 			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
-			var jsonResponse = await api.CreateWithdrawalRequest(expiresIn, amount);
+			var jsonResponse = await api.CreateWithdrawalRequest(expiresIn, amount, description);
 		
 			return jsonResponse;
 		}

@@ -210,7 +210,7 @@ public class UIController : MonoBehaviour
         
         var amount = createWithdrawalAmountInput.text;
 
-        var result = await ZBDController.CreateWithdrawal("300", amount);
+        var result = await ZBDController.CreateWithdrawal("300", amount, "Test Withdrawal");
         
         createWithdrawalMessageText.text = result.message;
         createWithdrawalWithdrawalIDText.text = result.data.id;
