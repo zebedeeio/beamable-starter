@@ -119,7 +119,7 @@ public class UIController : MonoBehaviour
     {
         walletBalance.text = "Sending Request...";
         
-        var wallet = await ZBDController.GetWalletBalance();
+        var wallet = await MyController.GetWalletBalance();
         
 
         walletBalance.text = wallet.data.balance + " " + wallet.data.unit;
@@ -139,7 +139,7 @@ public class UIController : MonoBehaviour
         var gamertag = gamertagPaymentInputField.text;
         var amount = gamertagPaymentSatsInputField.text;
 
-        var result = await ZBDController.SendPaymentToGamertag(gamertag, amount, "Test Transaction");
+        var result = await MyController.SendPaymentToGamertag(gamertag, amount, "Test Transaction");
 
         gamertagPaymentMessageText.text = result.message;
         gamertagTransactionIDText.text = result.data.transactionId;
@@ -152,7 +152,7 @@ public class UIController : MonoBehaviour
         
         var userID = fetchGamertagUserIDInput.text;
         
-        var result = await ZBDController.GetGamertagByUserID(userID);
+        var result = await MyController.GetGamertagByUserID(userID);
         
         fetchGamertagGamertagText.text = result.data.gamertag;
         fetchGamertagMessageText.text = result.message;
@@ -164,7 +164,7 @@ public class UIController : MonoBehaviour
         
         var gamertag = fetchUserIDGamertagInput.text;
         
-        var result = await ZBDController.GetUserIDByGamertag(gamertag);
+        var result = await MyController.GetUserIDByGamertag(gamertag);
         
         fetchUserIDUserIDText.text = result.data.id;
         fetchUserIDMessageText.text = result.message;
@@ -180,7 +180,7 @@ public class UIController : MonoBehaviour
         
         var amount = createChargeAmountInput.text;
 
-        var result = await ZBDController.CreateCharge("300", amount, "Test Charge ");
+        var result = await MyController.CreateCharge("300", amount, "Test Charge ");
 
         createChargeMessageText.text = result.message;
         createChargeChargeIDText.text = result.data.id;
@@ -193,7 +193,7 @@ public class UIController : MonoBehaviour
         
         var chargeID = getChargeDetailsIDInput.text;
         
-        var result = await ZBDController.GetChargeDetails(chargeID);
+        var result = await MyController.GetChargeDetails(chargeID);
         
         getChargeDetailsMessageText.text = result.message;
         getChargeDetailsAmountText.text = result.data.amount;
@@ -210,7 +210,7 @@ public class UIController : MonoBehaviour
         
         var amount = createWithdrawalAmountInput.text;
 
-        var result = await ZBDController.CreateWithdrawal("300", amount, "Test Withdrawal");
+        var result = await MyController.CreateWithdrawal("300", amount, "Test Withdrawal");
         
         createWithdrawalMessageText.text = result.message;
         createWithdrawalWithdrawalIDText.text = result.data.id;
@@ -225,7 +225,7 @@ public class UIController : MonoBehaviour
         
         var withdrawalID = getWithdrawalDetailsIDInput.text;
         
-        var result = await ZBDController.GetWithdrawalRequestDetails(withdrawalID);
+        var result = await MyController.GetWithdrawalRequestDetails(withdrawalID);
         
         getWithdrawalDetailsMessageText.text = result.message;
         getWithdrawalDetailsStatusText.text = result.data.status;
@@ -241,7 +241,7 @@ public class UIController : MonoBehaviour
     {
         btcPriceText.text = "Sending Request...";
         
-        var result = await ZBDController.GetBTCUSDExchangeRate();
+        var result = await MyController.GetBTCUSDExchangeRate();
         
         btcPriceText.text = result.data.btcUsdPrice;
         btcPriceMessageText.text = result.message;
@@ -252,7 +252,7 @@ public class UIController : MonoBehaviour
     {
         productionIPText.text = "Sending Request...";
         
-        var result = await ZBDController.GetProductionIPs();
+        var result = await MyController.GetProductionIPs();
         
         productionIPText.text = result.data.ips[0];
         
@@ -264,7 +264,7 @@ public class UIController : MonoBehaviour
         
         var ip = supportedRegionIPInput.text;
         
-        var result = await ZBDController.IsSupportedRegion(ip);
+        var result = await MyController.IsSupportedRegion(ip);
 
         supportedRegionText.text = result.data.isSupported.ToString();
 

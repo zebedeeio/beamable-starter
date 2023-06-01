@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using ZebedeeAPI;
 
-public static class ZBDController
+public static class MyController
 {
     #region Wallet
     
