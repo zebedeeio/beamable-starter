@@ -168,6 +168,46 @@ namespace Beamable.Server.Clients
                     serialized_ip};
             return this.Request<string>("ZBDMicroservice", "SupportedRegion", serializedFields);
         }
+        
+        /// <summary>
+        /// Call the GetAccessToken method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.GetAccessToken"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetAccessToken(string clientID, string code, string codeVerifier, string redirectURL)
+        {
+            string serialized_clientID = this.SerializeArgument<string>(clientID);
+            string serialized_code = this.SerializeArgument<string>(code);
+            string serialized_codeVerifier = this.SerializeArgument<string>(codeVerifier);
+            string serialized_redirectURL = this.SerializeArgument<string>(redirectURL);
+            string[] serializedFields = new string[] {
+                    serialized_clientID,
+                    serialized_code,
+                    serialized_codeVerifier,
+                    serialized_redirectURL};
+            return this.Request<string>("ZBDMicroservice", "GetAccessToken", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the GetUserData method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.GetUserData"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetUserData(string userToken)
+        {
+            string serialized_userToken = this.SerializeArgument<string>(userToken);
+            string[] serializedFields = new string[] {
+                    serialized_userToken};
+            return this.Request<string>("ZBDMicroservice", "GetUserData", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the TestService method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.TestService"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> TestService()
+        {
+            string[] serializedFields = new string[0];
+            return this.Request<string>("ZBDMicroservice", "TestService", serializedFields);
+        }
     }
     
     internal sealed class MicroserviceParametersZBDMicroserviceClient

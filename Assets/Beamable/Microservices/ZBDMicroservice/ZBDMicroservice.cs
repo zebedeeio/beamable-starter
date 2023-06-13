@@ -4,6 +4,26 @@ using Beamable.Server;
 
 namespace Beamable.Microservices
 {
+	
+	class AccessTokenRequest
+	{
+		public string code;
+		public string client_secret;
+		public string client_id;
+		public string code_verifier;
+		public string grant_type;
+		public string redirect_uri;
+		public string refresh_token;
+	}
+	public class ActionResponse
+	{
+		public bool error;
+		public string response;
+		public string type;
+		public string data;
+		public long responseCode;
+	}
+	
 	[Microservice("ZBDMicroservice")]
 	public class ZBDMicroservice : Microservice
 	{
@@ -150,6 +170,46 @@ namespace Beamable.Microservices
 		
 		#endregion
 		
+		#region Login
+		
+		
+		[ClientCallable]
+		public async Task<string> GetAccessToken(string clientID, string code, string codeVerifier, string redirectURL)
+		{
+			
+			var apiKey = await GetAPIKey();
+			var clientSecret = await GetClientSecret();
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.FetchAccessToken(clientID, clientSecret, code, codeVerifier, redirectURL);
+
+
+			return jsonResponse;
+
+		}
+
+		[ClientCallable]
+		public async Task<string> GetUserData(string userToken)
+		{
+			var apiKey = await GetAPIKey();
+			var clientSecret = GetClientSecret().Result;
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.FetchUserData(userToken);
+
+			return jsonResponse;
+		}
+
+		[ClientCallable]
+		public async Task<string> TestService()
+		{
+			var clientSecret = await GetClientSecret();
+
+			return clientSecret;
+		}
+		
+		#endregion
+		
 		
 		private async Task<string> GetAPIKey()
 		{
@@ -158,6 +218,14 @@ namespace Beamable.Microservices
 
 			return key;
 
+		}
+
+		private async Task<string> GetClientSecret()
+		{
+			var config = await Services.RealmConfig.GetRealmConfigSettings();
+			var secret = config.GetSetting("ZebedeeAPI", "clientsecret");
+
+			return secret;
 		}
 	}
 	
