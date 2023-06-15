@@ -200,16 +200,10 @@ namespace Beamable.Microservices
 			return jsonResponse;
 		}
 
-		[ClientCallable]
-		public async Task<string> TestService()
-		{
-			var clientSecret = await GetClientSecret();
-
-			return clientSecret;
-		}
-		
 		#endregion
 		
+		
+		#region Helper Functions
 		
 		private async Task<string> GetAPIKey()
 		{
@@ -227,6 +221,8 @@ namespace Beamable.Microservices
 
 			return secret;
 		}
+		
+		#endregion
 	}
 	
 	

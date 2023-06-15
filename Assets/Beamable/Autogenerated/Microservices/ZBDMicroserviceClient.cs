@@ -198,16 +198,6 @@ namespace Beamable.Server.Clients
                     serialized_userToken};
             return this.Request<string>("ZBDMicroservice", "GetUserData", serializedFields);
         }
-        
-        /// <summary>
-        /// Call the TestService method on the ZBDMicroservice microservice
-        /// <see cref="Beamable.Microservices.ZBDMicroservice.TestService"/>
-        /// </summary>
-        public Beamable.Common.Promise<string> TestService()
-        {
-            string[] serializedFields = new string[0];
-            return this.Request<string>("ZBDMicroservice", "TestService", serializedFields);
-        }
     }
     
     internal sealed class MicroserviceParametersZBDMicroserviceClient

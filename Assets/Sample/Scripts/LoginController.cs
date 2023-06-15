@@ -18,30 +18,41 @@ public class LoginController : MonoBehaviour
     
     public static LoginController Instance { get; private set; }
     
+    [Header("Zebedee API Config")]
     [SerializeField] private string apiLoginBaseEndpoint = "https://api.zebedee.io/";
     [SerializeField] private string clientID = "YOUR_CLIENT_ID";
     [SerializeField] private string redirectURL = "";
     [SerializeField] private string responseType = "code";
 
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI GamertagText;
+    [SerializeField] private TextMeshProUGUI lightningAddressText;
     [SerializeField] private TextMeshProUGUI responseText;
     
-    public string deeplinkURL;
+    private string deeplinkURL;
 
+    #region Unity Methods
     private void Awake()
     {
+        if (clientID == "YOUR_CLIENT_ID" || clientID == "")
+        {
+            Debug.LogError("You must enter your Client ID in the Login Controller.");
+
+        }
+        
         if (Instance == null)
         {
-            responseText.text = "Awake";
-            Instance = this;                
+            Instance = this; 
+            
             Application.deepLinkActivated += onDeepLinkActivated;
             if (!string.IsNullOrEmpty(Application.absoluteURL))
             {
-                responseText.text = "Cold Start: " + Application.absoluteURL;
-                // Cold start and Application.absoluteURL not null so process Deep Link.
                 onDeepLinkActivated(Application.absoluteURL);
             }
-            // Initialize DeepLink Manager global variable.
-            else deeplinkURL = "[none]";
+            else
+            {
+                deeplinkURL = "";
+            }
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -49,106 +60,87 @@ public class LoginController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
+    #endregion
 
-    private void Start()
-    {
-        throw new NotImplementedException();
-    }
-
+    #region Deep Link Event
+    
     private void onDeepLinkActivated(string absoluteURL)
     {
-        responseText.text = "Deep Link: " + absoluteURL;
-        
         deeplinkURL = absoluteURL;
-        
+        responseText.text = "Making Call...";
         ContinueLogin(deeplinkURL);
     }
+    
+    #endregion
 
+    #region Login Functions
+    
     public void Login()
     {
         var pkce = ZebedeeUtils.GeneratePKCE();
         
         string state = Guid.NewGuid().ToString();
-        string redirect = WebUtility.UrlEncode(this.redirectURL);
-        
+
         PlayerPrefs.SetString("verifier", pkce["verifier"]);
         PlayerPrefs.SetString("state", state);
-        
-        // JToken  blogPosts = JArray.Parse(json);
-        // JToken  blogPost = blogPosts[0];
-        //string title = blogPost.Value<string>("Title");
 
         var authURL = ZebedeeUtils.BuildAuthorizationURL(apiLoginBaseEndpoint, clientID, responseType, redirectURL, pkce["challenge"]);
-        
-        responseText.text = authURL;
-        
-        OpenBrowser(authURL);
-    }
 
-    private void OpenBrowser(string URL)
-    {
-        Application.OpenURL(URL);
+        Application.OpenURL(authURL);
+
     }
     
+    
+
     private async void ContinueLogin(string url)
     {
-        responseText.text = "ContinueLogin: " + url;
-        Debug.Log(redirectURL + " " + url);
         if (!url.Contains(redirectURL))
         {
             return;
         }
         
-        Debug.Log("cont login " + url);
         var queryString = new Uri(url).Query;
         var parameters = HttpUtility.ParseQueryString(queryString);
-        
         var code = parameters.Get("code");
-        var state = parameters.Get("state");
         var verifier = PlayerPrefs.GetString("verifier");
         
-        //Get access token using the code and verifier, this SHOULD BE DONE on the server!
-        responseText.text = "Code: " + code + " Verifier: " + verifier;
         
-        var token = await GetOauthAccessToken(code, verifier);
-        responseText.text = "Token: " + token;
+        var token = await GetAccessToken(code, verifier);
         var userData = await GetUserData(token);
         responseText.text = "UserData: " + userData;
         
-        Debug.Log(userData);
+        var jsonObject = JsonConvert.DeserializeObject<FetchUserData_Response>(userData);
+        GamertagText.text = "Gamertag: " + jsonObject.data.gamertag;
+        lightningAddressText.text = "Lightning Address: " + jsonObject.data.lightningAddress;
 
     }
+    
+    #endregion
 
+    #region Beamable Microservice Calls
+    
     private async Task<string> GetUserData(string token)
     {
-        responseText.text = "GetUserData: " + token;
         var ctx = BeamContext.Default;
         await ctx.OnReady;
 
         var result = await ctx.Microservices().ZBDMicroservice().GetUserData(token);
 
-       responseText.text = "Result: " + result;
-        
         return result;
     }
 
-    private async Task<string> GetOauthAccessToken(string code, string verifier)
+    private async Task<string> GetAccessToken(string code, string verifier)
     {
-        responseText.text = "GetOauthAccessToken: " + code + " " + verifier;
         var ctx = BeamContext.Default;
         await ctx.OnReady;
 
-        responseText.text = "CTX is ready... calling service now...";
-        
         var result = await ctx.Microservices().ZBDMicroservice().GetAccessToken(clientID, code, verifier, redirectURL);
+        var jsonObject = JsonConvert.DeserializeObject<FetchAccessToken_Response>(result);
 
-        responseText.text = "Result after service call.: " + result;
-        
-        var jsonObject = JsonConvert.DeserializeObject<Token_Response>(result);
-        
-        responseText.text = "AccessToken: " + jsonObject.access_token;
-        
         return jsonObject.access_token;
     }
+    
+    #endregion
     
 }
