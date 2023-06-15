@@ -937,7 +937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   apiLoginBaseEndpoint: https://api.zebedee.io/
-  clientID: bf4f6c4f-38f5-49da-841f-3eb1b073dab5
+  clientID: YOUR_CLIENT_ID
   redirectURL: zbdsample://authorize
   responseType: code
   GamertagText: {fileID: 1372671213}
