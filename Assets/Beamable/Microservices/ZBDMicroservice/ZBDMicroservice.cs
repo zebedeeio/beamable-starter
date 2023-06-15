@@ -189,11 +189,22 @@ namespace Beamable.Microservices
 		}
 
 		[ClientCallable]
+		public async Task<string> RefreshAccessToken(string clientID, string refreshToken, string redirectURL)
+		{
+			var apiKey = await GetAPIKey();
+			var clientSecret = await GetClientSecret();
+			
+			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
+			var jsonResponse = await api.RefreshAccessToken(clientID, clientSecret, refreshToken, redirectURL);
+			
+			return jsonResponse;
+		}
+
+		[ClientCallable]
 		public async Task<string> GetUserData(string userToken)
 		{
 			var apiKey = await GetAPIKey();
-			var clientSecret = GetClientSecret().Result;
-			
+
 			var api = new ZebedeeAPI.ZebedeeAPI(apiKey);
 			var jsonResponse = await api.FetchUserData(userToken);
 

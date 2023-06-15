@@ -188,6 +188,22 @@ namespace Beamable.Server.Clients
         }
         
         /// <summary>
+        /// Call the RefreshAccessToken method on the ZBDMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZBDMicroservice.RefreshAccessToken"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> RefreshAccessToken(string clientID, string refreshToken, string redirectURL)
+        {
+            string serialized_clientID = this.SerializeArgument<string>(clientID);
+            string serialized_refreshToken = this.SerializeArgument<string>(refreshToken);
+            string serialized_redirectURL = this.SerializeArgument<string>(redirectURL);
+            string[] serializedFields = new string[] {
+                    serialized_clientID,
+                    serialized_refreshToken,
+                    serialized_redirectURL};
+            return this.Request<string>("ZBDMicroservice", "RefreshAccessToken", serializedFields);
+        }
+        
+        /// <summary>
         /// Call the GetUserData method on the ZBDMicroservice microservice
         /// <see cref="Beamable.Microservices.ZBDMicroservice.GetUserData"/>
         /// </summary>

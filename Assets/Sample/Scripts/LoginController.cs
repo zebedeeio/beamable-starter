@@ -27,17 +27,26 @@ public class LoginController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI GamertagText;
     [SerializeField] private TextMeshProUGUI lightningAddressText;
+    [SerializeField] private TextMeshProUGUI emailText;
+    [SerializeField] private TextMeshProUGUI isVerifiedText;
+    [SerializeField] private TextMeshProUGUI refreshText;
     [SerializeField] private TextMeshProUGUI responseText;
+    [SerializeField] private GameObject refreshButton;
+
+    [HideInInspector]
+    public string accessToken;
+    [HideInInspector]
+    public string refreshToken;
     
     private string deeplinkURL;
+    
 
     #region Unity Methods
     private void Awake()
     {
         if (clientID == "YOUR_CLIENT_ID" || clientID == "")
         {
-            Debug.LogError("You must enter your Client ID in the Login Controller.");
-
+            responseText.text = "You must enter your Client ID in the Login Controller.";
         }
         
         if (Instance == null)
@@ -90,9 +99,13 @@ public class LoginController : MonoBehaviour
         Application.OpenURL(authURL);
 
     }
-    
-    
 
+    public void Refresh()
+    {
+        responseText.text = "Refreshing...";
+        RefreshUserData();
+    }
+    
     private async void ContinueLogin(string url)
     {
         if (!url.Contains(redirectURL))
@@ -106,14 +119,30 @@ public class LoginController : MonoBehaviour
         var verifier = PlayerPrefs.GetString("verifier");
         
         
-        var token = await GetAccessToken(code, verifier);
-        var userData = await GetUserData(token);
+        var tokens = await GetAccessToken(code, verifier);
+        accessToken = tokens["access_token"];
+        refreshToken = tokens["refresh_token"];
+        
+        var userData = await GetUserData(accessToken);
         responseText.text = "UserData: " + userData;
         
         var jsonObject = JsonConvert.DeserializeObject<FetchUserData_Response>(userData);
         GamertagText.text = "Gamertag: " + jsonObject.data.gamertag;
         lightningAddressText.text = "Lightning Address: " + jsonObject.data.lightningAddress;
+        emailText.text = "Email: " + jsonObject.data.email;
+        isVerifiedText.text = "Is Verified: " + jsonObject.data.isVerified;
+        
+        refreshButton.SetActive(true);
+        
+        // TODO: Get Latest access token with Refresh token (Refresh Access token)
 
+    }
+
+    private async void RefreshUserData()
+    {
+        var refreshedAccessToken = await RefreshAccessToken(refreshToken);
+        refreshText.text = "Refreshed Access Token: " + refreshedAccessToken["access_token"];
+        responseText.text = "Refreshed Access Token: ";
     }
     
     #endregion
@@ -130,7 +159,7 @@ public class LoginController : MonoBehaviour
         return result;
     }
 
-    private async Task<string> GetAccessToken(string code, string verifier)
+    private async Task<Dictionary<string, string>> GetAccessToken(string code, string verifier)
     {
         var ctx = BeamContext.Default;
         await ctx.OnReady;
@@ -138,7 +167,26 @@ public class LoginController : MonoBehaviour
         var result = await ctx.Microservices().ZBDMicroservice().GetAccessToken(clientID, code, verifier, redirectURL);
         var jsonObject = JsonConvert.DeserializeObject<FetchAccessToken_Response>(result);
 
-        return jsonObject.access_token;
+        return new Dictionary<string, string>()
+        {
+            { "access_token", jsonObject.access_token },
+            { "refresh_token", jsonObject.refresh_token }
+        };
+    }
+    
+    private async Task<Dictionary<string, string>> RefreshAccessToken(string refreshToken)
+    {
+        var ctx = BeamContext.Default;
+        await ctx.OnReady;
+
+        var result = await ctx.Microservices().ZBDMicroservice().RefreshAccessToken(clientID, refreshToken, redirectURL);
+        var jsonObject = JsonConvert.DeserializeObject<FetchAccessToken_Response>(result);
+
+        return new Dictionary<string, string>()
+        {
+            { "access_token", jsonObject.access_token },
+            { "refresh_token", jsonObject.refresh_token }
+        };
     }
     
     #endregion
