@@ -133,8 +133,6 @@ public class LoginController : MonoBehaviour
         isVerifiedText.text = "Is Verified: " + jsonObject.data.isVerified;
         
         refreshButton.SetActive(true);
-        
-        // TODO: Get Latest access token with Refresh token (Refresh Access token)
 
     }
 
