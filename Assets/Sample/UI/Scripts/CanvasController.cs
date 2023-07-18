@@ -361,5 +361,10 @@ public class CanvasController : MonoBehaviour
         GUIUtility.systemCopyBuffer = field.text;
     }
     
+    public void OpenURL(string url)
+    {
+        Application.OpenURL(url);
+    }
+    
     #endregion
 }
