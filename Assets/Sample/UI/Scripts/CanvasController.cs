@@ -129,11 +129,11 @@ public class CanvasController : MonoBehaviour
     {
         walletBalance.text = "Sending Request...";
         
-        var wallet = await MyController.GetWalletBalance();
+        var result = await MyController.GetWalletBalance();
 
-        if (wallet.success && wallet.data.balance != null && wallet.data.unit != null)
+        if (result.success && result.data.balance != null)
         {
-            walletBalance.text = wallet.data.balance + " " + wallet.data.unit;
+            walletBalance.text = ConvertToSats(Int32.Parse(result.data.balance)).ToString();
         }
         else
         {
