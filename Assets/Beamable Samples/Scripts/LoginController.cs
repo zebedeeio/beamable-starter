@@ -124,13 +124,13 @@ public class LoginController : MonoBehaviour
         refreshToken = tokens["refresh_token"];
         
         var userData = await GetUserData(accessToken);
-        responseText.text = "UserData: " + userData;
+        responseText.text = userData;
         
         var jsonObject = JsonConvert.DeserializeObject<FetchUserData_Response>(userData);
-        GamertagText.text = "Gamertag: " + jsonObject.data.gamertag;
-        lightningAddressText.text = "Lightning Address: " + jsonObject.data.lightningAddress;
-        emailText.text = "Email: " + jsonObject.data.email;
-        isVerifiedText.text = "Is Verified: " + jsonObject.data.isVerified;
+        GamertagText.text = jsonObject.data.gamertag;
+        lightningAddressText.text = jsonObject.data.lightningAddress;
+        emailText.text = jsonObject.data.email;
+        isVerifiedText.text = jsonObject.data.isVerified.ToString();
         
         refreshButton.SetActive(true);
 
@@ -139,7 +139,7 @@ public class LoginController : MonoBehaviour
     private async void RefreshUserData()
     {
         var refreshedAccessToken = await RefreshAccessToken(refreshToken);
-        refreshText.text = "Refreshed Access Token: " + refreshedAccessToken["access_token"];
+        refreshText.text = refreshedAccessToken["access_token"];
         responseText.text = "Refreshed Access Token: ";
     }
     
