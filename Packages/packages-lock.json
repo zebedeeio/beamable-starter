@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.beamable": {
-      "version": "file:com.beamable",
+      "version": "1.12.0-PREVIEW.RC2",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0",
         "com.unity.addressables": "1.18.19",
@@ -11,15 +11,17 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.test-framework": "1.1.19",
         "com.unity.test-framework.performance": "2.8.1-preview"
-      }
+      },
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
     },
     "com.beamable.server": {
-      "version": "file:com.beamable.server",
+      "version": "1.12.0-PREVIEW.RC2",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
-        "com.beamable": "BUILD__SDK__VERSION__STRING"
-      }
+        "com.beamable": "1.12.0-PREVIEW.RC2"
+      },
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
     },
     "com.unity.2d.animation": {
       "version": "9.0.3",

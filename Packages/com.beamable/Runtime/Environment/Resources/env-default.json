@@ -1,9 +1,0 @@
-{
-    "environment": "prod",
-    "apiUrl": "https://api.beamable.com",
-    "portalUrl": "https://portal.beamable.com",
-    "beamMongoExpressUrl": "https://storage.beamable.com",
-    "dockerRegistryUrl": "https://microservices.beamable.com/v2/",
-    "isUnityVsp": "true",
-    "sdkVersion": "1.11.0"
-}

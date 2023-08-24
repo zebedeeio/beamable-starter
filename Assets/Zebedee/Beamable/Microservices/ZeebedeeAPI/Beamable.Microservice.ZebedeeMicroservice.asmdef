@@ -9,7 +9,8 @@
         "Beamable.SmallerJSON",
         "Unity.Beamable.Server.Runtime.Common",
         "Unity.Beamable.Server.Runtime.Mocks",
-        "Zebedee.Config"
+        "Zebedee.Config",
+        "Unity.Beamable.Editor.Server"
     ],
     "includePlatforms": [
         "Editor"
