@@ -110,6 +110,118 @@ namespace Beamable.Server.Clients
         }
         
         /// <summary>
+        /// Call the CreateStaticCharge method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.CreateStaticCharge"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> CreateStaticCharge(string allowedSlots, string minAmount, string maxAmount, string description, string internalID, string callbackURL, string successMessage)
+        {
+            string serialized_allowedSlots = this.SerializeArgument<string>(allowedSlots);
+            string serialized_minAmount = this.SerializeArgument<string>(minAmount);
+            string serialized_maxAmount = this.SerializeArgument<string>(maxAmount);
+            string serialized_description = this.SerializeArgument<string>(description);
+            string serialized_internalID = this.SerializeArgument<string>(internalID);
+            string serialized_callbackURL = this.SerializeArgument<string>(callbackURL);
+            string serialized_successMessage = this.SerializeArgument<string>(successMessage);
+            string[] serializedFields = new string[] {
+                    serialized_allowedSlots,
+                    serialized_minAmount,
+                    serialized_maxAmount,
+                    serialized_description,
+                    serialized_internalID,
+                    serialized_callbackURL,
+                    serialized_successMessage};
+            return this.Request<string>("ZebedeeMicroservice", "CreateStaticCharge", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the GetStaticChargeDetails method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.GetStaticChargeDetails"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetStaticChargeDetails(string staticChargeID)
+        {
+            string serialized_staticChargeID = this.SerializeArgument<string>(staticChargeID);
+            string[] serializedFields = new string[] {
+                    serialized_staticChargeID};
+            return this.Request<string>("ZebedeeMicroservice", "GetStaticChargeDetails", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the PayInvoice method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.PayInvoice"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> PayInvoice(string description, string internalID, string invoice, string callbackURL, string amount)
+        {
+            string serialized_description = this.SerializeArgument<string>(description);
+            string serialized_internalID = this.SerializeArgument<string>(internalID);
+            string serialized_invoice = this.SerializeArgument<string>(invoice);
+            string serialized_callbackURL = this.SerializeArgument<string>(callbackURL);
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string[] serializedFields = new string[] {
+                    serialized_description,
+                    serialized_internalID,
+                    serialized_invoice,
+                    serialized_callbackURL,
+                    serialized_amount};
+            return this.Request<string>("ZebedeeMicroservice", "PayInvoice", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the GetPaymentDetails method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.GetPaymentDetails"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> GetPaymentDetails(string paymentId)
+        {
+            string serialized_paymentId = this.SerializeArgument<string>(paymentId);
+            string[] serializedFields = new string[] {
+                    serialized_paymentId};
+            return this.Request<string>("ZebedeeMicroservice", "GetPaymentDetails", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the SendPaymentToLightningAddress method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.SendPaymentToLightningAddress"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> SendPaymentToLightningAddress(string lnAddress, string amount, string comment)
+        {
+            string serialized_lnAddress = this.SerializeArgument<string>(lnAddress);
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string serialized_comment = this.SerializeArgument<string>(comment);
+            string[] serializedFields = new string[] {
+                    serialized_lnAddress,
+                    serialized_amount,
+                    serialized_comment};
+            return this.Request<string>("ZebedeeMicroservice", "SendPaymentToLightningAddress", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the FetchChargeFromLightningAddress method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.FetchChargeFromLightningAddress"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> FetchChargeFromLightningAddress(string lnAddress, string amount, string description)
+        {
+            string serialized_lnAddress = this.SerializeArgument<string>(lnAddress);
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string serialized_description = this.SerializeArgument<string>(description);
+            string[] serializedFields = new string[] {
+                    serialized_lnAddress,
+                    serialized_amount,
+                    serialized_description};
+            return this.Request<string>("ZebedeeMicroservice", "FetchChargeFromLightningAddress", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the ValidateLightningAddress method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.ValidateLightningAddress"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> ValidateLightningAddress(string lnAddress)
+        {
+            string serialized_lnAddress = this.SerializeArgument<string>(lnAddress);
+            string[] serializedFields = new string[] {
+                    serialized_lnAddress};
+            return this.Request<string>("ZebedeeMicroservice", "ValidateLightningAddress", serializedFields);
+        }
+        
+        /// <summary>
         /// Call the CreateWithdrawalRequest method on the ZebedeeMicroservice microservice
         /// <see cref="Beamable.Microservices.ZebedeeMicroservice.CreateWithdrawalRequest"/>
         /// </summary>
@@ -213,6 +325,20 @@ namespace Beamable.Server.Clients
             string[] serializedFields = new string[] {
                     serialized_userToken};
             return this.Request<string>("ZebedeeMicroservice", "GetUserData", serializedFields);
+        }
+        
+        /// <summary>
+        /// Call the InitiateInternalTransfer method on the ZebedeeMicroservice microservice
+        /// <see cref="Beamable.Microservices.ZebedeeMicroservice.InitiateInternalTransfer"/>
+        /// </summary>
+        public Beamable.Common.Promise<string> InitiateInternalTransfer(string amount, string receiverWallet)
+        {
+            string serialized_amount = this.SerializeArgument<string>(amount);
+            string serialized_receiverWallet = this.SerializeArgument<string>(receiverWallet);
+            string[] serializedFields = new string[] {
+                    serialized_amount,
+                    serialized_receiverWallet};
+            return this.Request<string>("ZebedeeMicroservice", "InitiateInternalTransfer", serializedFields);
         }
     }
     

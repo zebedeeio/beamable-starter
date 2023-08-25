@@ -18,6 +18,7 @@ MonoBehaviour:
   EditorDownloadBatchSize:
     HasValue: 0
     Value: 0
+  EnablePropertyOrderDependenceForContentChecksum: 1
   EnableLocalContentInEditor: 0
   LocalContentReferenceDelaySeconds:
     HasValue: 0

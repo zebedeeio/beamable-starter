@@ -21,3 +21,4 @@ MonoBehaviour:
     DisableBeamableListPropertyDrawers: 0
     RunAsBeamableDeveloper: 0
     DisableBeamableDateStringPropertyDrawers: 0
+    DisableBeamableCidPidWarningsOnBuild: 0

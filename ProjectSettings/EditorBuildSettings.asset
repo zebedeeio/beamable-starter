@@ -6,6 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Beamable Samples/Scenes/ZBD Login.unity
-    guid: c83d4a108d15aca489ebe601c6ab61f5
-  m_configObjects: {}
+    path: Assets/Scenes/SampleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: ce6e6771a5e573b4d9fc8c4806ddcc98, type: 2}

@@ -1,0 +1,28 @@
+{
+    "name": "Beamable.Microservice.ZebedeeMicroservice",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Beamable.Runtime.Common",
+        "Unity.Beamable.Server.Runtime",
+        "Unity.Beamable.Server.Runtime.Shared",
+        "Unity.Beamable",
+        "Beamable.SmallerJSON",
+        "Unity.Beamable.Server.Runtime.Common",
+        "Unity.Beamable.Server.Runtime.Mocks",
+        "Unity.Beamable.Customer.Common"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "zbd_csharp.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
