@@ -315,10 +315,10 @@ namespace Beamable.Microservices
 
 		private async Task<string> GetClientSecret()
 		{
-			//var config = await Constants.Features.Services.RealmConfig.GetRealmConfigSettings();
-			//var secret = config.GetSetting("ZebedeeAPI", "clientsecret");
+			var config = Provider.GetService<Config>();
+			var secret = config.ClientSecret;
 
-			return "";
+			return secret;
 		}
 		
 		#endregion
