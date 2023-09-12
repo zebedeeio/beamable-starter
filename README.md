@@ -27,19 +27,19 @@ The UI Kit is a starting point for how the Zebedee integration can look in your 
 
 There is a playable scene to demo the assets to see what the look and feel is like.
 
-    💡 **NOTE:** There is no functionality in this demo. This is just to show UI elements that can be used in your projects.
+💡 **NOTE:** There is no functionality in the UI Kit demo. This is just to show UI elements that can be used in your projects.
 
 ---
 
 ### **Why use Beamable with Zebedee**
 
-    To ensure the security of your game account on Zebedee, it is crucial to safeguard your API key and avoid exposing it within any client-side code. By leveraging Beamable in conjunction with Zebedee, you gain a seamless integration solution that allows for easy incorporation of Zebedee functionalities into your game. Leveraging the power of Beamable's microservices and Realm configurations, you can establish safe integration of Zebedee within your game environment.
+To ensure the security of your game account on Zebedee, it is crucial to safeguard your API key and avoid exposing it within any client-side code. By leveraging Beamable in conjunction with Zebedee, you gain a seamless integration solution that allows for easy incorporation of Zebedee functionalities into your game. Leveraging the power of Beamable's microservices and Realm configurations, you can establish safe integration of Zebedee within your game environment.
 
----
+
 
 ## Setup Unity
 
-     💡 This can be done on a new project or an existing one.
+💡 **NOTE:** This can be done on a new project or an existing one.
 
 **Steps:**
 
@@ -82,7 +82,7 @@ To install the package just drag and drop the file into the Unity project explor
 
 [https://www.docker.com/](https://www.docker.com/)
 
-     💡 Docker is needed to run and test the Microservice locally
+💡 **NOTE:** Docker is needed to run and test the Microservice locally
 
 ## Setting Up Beamable
 
@@ -115,7 +115,7 @@ Here is an example of how your Realm configuration should look:
 
 ![Untitled](docs/images/Untitled6.png)
 
-     💡 Note: To use sample microservice you must use the same namespace and key. On your microservice, these can be anything you want.
+💡 **NOTE:** Note: To use sample microservice you must use the same namespace and key. On your microservice, these can be anything you want.
 
 ## Running the microservice
 
@@ -129,7 +129,7 @@ Here you will see the ZebedeeMicroservice
 
 ![Untitled](docs/images/Untitled8.png)
 
-> 💡 If you see this warning below make sure you have Docker installed.
+> 💡 **NOTE:** If you see this warning below make sure you have Docker installed.
 >
 > ![Untitled](docs/images/Untitled9.png)
 
